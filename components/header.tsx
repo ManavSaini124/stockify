@@ -4,7 +4,7 @@ import React from 'react'
 import NavItems from './NavItems'
 import UserDropdown from './UserDropdown'
 
-const Header = () => {
+const Header = ({user}:{user:User}) => {
   return (
     // should always stick on top
     <header className='sticky top-0 header'>
@@ -23,7 +23,7 @@ const Header = () => {
                 <NavItems />
             </nav>
         {/* USER DROPDOWN COMPONENTS */}
-        <UserDropdown />
+        <UserDropdown user = { user }/>
         </div>
     </header>
   )

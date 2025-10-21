@@ -2,12 +2,16 @@
 import FooterLink from '@/components/forms/FooterLink'
 import InputField from '@/components/forms/InputField'
 import { Button } from '@/components/ui/button'
+import { signIn } from '@/lib/actions/auth.actions'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import { useForm, SubmitHandler } from "react-hook-form"
+import { toast } from 'sonner'
 
 
 
 const SignInPage = () => {
+    const router = useRouter();
     const {
         register,
         handleSubmit,
@@ -23,9 +27,13 @@ const SignInPage = () => {
 
     const onSubmit= async(data:SignInFormData) => {
         try{
-            console.log(data);
+            const result = await signIn(data);
+            if(result.success){
+                router.push('/');
+            }
         }catch(err){
             console.error(err);
+            toast.error("Sign-in failed. Please try again.");
         }
     }
 
@@ -49,6 +57,7 @@ const SignInPage = () => {
                     label = "Password"
                     placeholder = "Enter your Password"
                     register={register}
+                    type="password"
                     error={errors.password}
                     validation={{ required: "Password is required" , minLength: 8}}
                 />
